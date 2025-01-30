@@ -81,7 +81,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    update_status()
+    await update_status()
 
     # print(888, repr(message.channel))
 
