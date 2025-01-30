@@ -95,6 +95,8 @@ async def on_message(message):
                 file = discord.File("data/data.json", filename="data.json")
                 # embed = discord.Embed()
                 await message.channel.send(file=file)
+            else:
+                await message.channel.send(convo())
 
         else:
             await message.channel.send(convo())
