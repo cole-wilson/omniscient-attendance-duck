@@ -84,13 +84,14 @@ async def on_message(message):
             await message.channel.send(convo())
         return
 
-    if client.user.mentioned_in(message):
+    if client.user.mentioned_in(message) or "attendance duck" in message.content.lower() or "quack" in message.content.lower():
         if "report" in message.content.lower():
             await message.reply("Currently, Dana 3 has been used for " + str(round(data["weeks"][get_current_week_str()]["total_hours"],2)) + " hours this week!")
             await message.channel.send("... and according to my records, " + ("someone" if data["status"] else "no one") + " is in the shop right now.")
 
         else:
             await message.reply(convo())
+
 
     if message.channel.name != "room-log":
         return
