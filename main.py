@@ -97,6 +97,14 @@ async def on_message(message):
                 file = discord.File("data/data.json", filename="data.json")
                 # embed = discord.Embed()
                 await message.channel.send(file=file)
+            if message.content == "erase ERASE erase!":
+                save()
+                file = discord.File("data/data.json", filename="data.json")
+                # embed = discord.Embed()
+                await message.channel.send(file=file)
+                data = {     "status": False,     "users": {},     "weeks": {} }
+                save()
+
             else:
                 await message.channel.send(convo())
 
