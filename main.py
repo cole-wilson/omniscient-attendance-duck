@@ -3,6 +3,7 @@ import discord
 from datetime import datetime, timedelta
 import random
 import os
+import math
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 
@@ -103,8 +104,8 @@ async def on_message(message):
         if "report" in message.content.lower() or "status" in message.content.lower():
             t = get_current_total()
             h = int(t)
-            m = round((t*60) % 60)
-            s = round((t*3600) % 60)
+            m = math.floor((t*60) % 60)
+            s = math.floor((t*3600) % 60)
 
             await message.reply(f"Currently, Dana 3 has been used for {h} hours, {m} minutes, and {s} seconds this week! According to my records, " + ("someone" if data["status"] else "no one") + " is in the shop right now.")
 
