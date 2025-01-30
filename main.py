@@ -64,10 +64,10 @@ def get_current_total():
 
 async def update_status():
     if data["status"]:
-        game = discord.CustomActivity("Dana 3 is OPEN [" + str(round(get_current_total(),1)) + " hours this week]")
+        game = discord.CustomActivity("Dana 3 is OPEN [" + str(round(get_current_total(),2)) + " hours this week]")
         await client.change_presence(status=discord.Status.online, activity=game)
     else:
-        game = discord.CustomActivity("Dana 3 is EMPTY [" + str(round(get_current_total(),1)) + " hours this week]")
+        game = discord.CustomActivity("Dana 3 is EMPTY [" + str(round(get_current_total(),2)) + " hours this week]")
         await client.change_presence(status=discord.Status.do_not_disturb, activity=game)
 
 @client.event
