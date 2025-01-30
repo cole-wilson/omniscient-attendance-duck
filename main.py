@@ -81,6 +81,8 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    update_status()
+
     # print(888, repr(message.channel))
 
     if isinstance(message.channel, discord.DMChannel):
