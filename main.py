@@ -164,7 +164,7 @@ async def on_message(message):
             data["weeks"][get_current_week_str()]["total_hours"] = get_current_total()
             data["weeks"][get_current_week_str()]["log"].append({
                 "user": message.author.id,
-                "time": ts.isoformat(),
+                "time": datetime.now().isoformat(),
                 "state": "close"
             })
 
