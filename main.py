@@ -106,8 +106,7 @@ async def on_message(message):
             m = round((t*60) % 60)
             s = round((t*3600) % 60)
 
-            await message.reply(f"Currently, Dana 3 has been used for {h} hours, {m} minutes, and {s} seconds this week!")
-            await message.reply("... and according to my records, " + ("someone" if data["status"] else "no one") + " is in the shop right now.")
+            await message.reply(f"Currently, Dana 3 has been used for {h} hours, {m} minutes, and {s} seconds this week! According to my records, " + ("someone" if data["status"] else "no one") + " is in the shop right now.")
 
         else:
             await message.reply(convo())
