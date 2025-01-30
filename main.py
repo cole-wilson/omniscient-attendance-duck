@@ -45,7 +45,7 @@ except FileNotFoundError:
 
 
 async def update_status():
-    if len(data["weeks"][get_current_week_str()].keys()) == 0:
+    if len(data["weeks"].keys()) == 0:
         return
     if data["status"]:
         game = discord.CustomActivity("Dana 3 is OPEN [" + str(round(data["weeks"][get_current_week_str()]["total_hours"],1)) + " hours this week]")
