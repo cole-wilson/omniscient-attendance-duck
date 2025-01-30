@@ -73,6 +73,13 @@ async def on_message(message):
             await message.channel.send(f"thanks! I set your name/id to `{message.content}` (**quacks**)")
             await message.channel.send("if you want to change your name/id just REPLY to this message again")
             save()
+        elif message.author.id in os.getenv("MOD_USERS").split("."):
+            if "dump" in message.content:
+                save()
+                file = discord.File("data/data.json", filename="data.json")
+                embed = discord.Embed()
+                await message.channel.send(embed=embed, file=file)
+
         else:
             await message.channel.send(convo())
         return
