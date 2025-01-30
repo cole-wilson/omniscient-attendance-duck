@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import random
 import os
 import math
+from discord.ext import tasks
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 
@@ -72,6 +73,10 @@ async def update_status():
 
 @client.event
 async def on_ready():
+    await update_status()
+
+@tasks.loop(minutes=1)
+async def update_status2():
     await update_status()
 
 @client.event
