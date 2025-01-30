@@ -102,7 +102,7 @@ async def on_message(message):
 
     if client.user.mentioned_in(message) or "duck" in message.content.lower() or "quack" in message.content.lower():
         if "report" in message.content.lower() or "status" in message.content.lower():
-            message.add_reaction("🫡")
+            await message.add_reaction("🫡")
             t = get_current_total()
             h = int(t)
             m = math.floor((t*60) % 60)
