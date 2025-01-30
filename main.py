@@ -43,15 +43,30 @@ try:
 except FileNotFoundError:
     pass
 
+def get_current_total():
+    ts = datetime.now()
+    if len(data["weeks"].keys()) == 0:
+        return 0
+
+    try:
+        last = data["weeks"][get_current_week_str()]["log"][-1]
+    except IndexError:
+        return 0
+
+    if last["state"] == "open":
+        delta = ts - datetime.fromisoformat(last["time"])
+        # await message.channel.send("last " + str(delta.total_seconds()) + " seconds")
+        return data["weeks"][get_current_week_str()]["total_hours"] + delta.total_seconds() / 3600
+    else:
+        return data["weeks"][get_current_week_str()]["total_hours"]
+
 
 async def update_status():
-    if len(data["weeks"].keys()) == 0:
-        return
     if data["status"]:
-        game = discord.CustomActivity("Dana 3 is OPEN [" + str(round(data["weeks"][get_current_week_str()]["total_hours"],1)) + " hours this week]")
+        game = discord.CustomActivity("Dana 3 is OPEN [" + str(round(get_current_total(),1)) + " hours this week]")
         await client.change_presence(status=discord.Status.online, activity=game)
     else:
-        game = discord.CustomActivity("Dana 3 is EMPTY [" + str(round(data["weeks"][get_current_week_str()]["total_hours"],1)) + " hours this week]")
+        game = discord.CustomActivity("Dana 3 is EMPTY [" + str(round(get_current_total(),1)) + " hours this week]")
         await client.change_presence(status=discord.Status.do_not_disturb, activity=game)
 
 @client.event
@@ -73,7 +88,7 @@ async def on_message(message):
             await message.channel.send(f"thanks! I set your name/id to `{message.content}` (**quacks**)")
             await message.channel.send("if you want to change your name/id just REPLY to this message again")
             save()
-        elif message.author.id in os.getenv("MOD_USERS").split("."):
+        elif str(message.author.id) in os.getenv("MOD_USERS").split("."):
             if "dump" in message.content:
                 save()
                 file = discord.File("data/data.json", filename="data.json")
@@ -86,7 +101,12 @@ async def on_message(message):
 
     if client.user.mentioned_in(message) or "attendance duck" in message.content.lower() or "quack" in message.content.lower():
         if "report" in message.content.lower():
-            await message.reply("Currently, Dana 3 has been used for " + str(round(data["weeks"][get_current_week_str()]["total_hours"],2)) + " hours this week!")
+            t = get_current_total()
+            h = int(t)
+            m = (t*60) % 60
+            s = (t*3600) % 60
+
+            await message.reply(f"Currently, Dana 3 has been used for {h} hours, {m} minutes, and {s} seconds this week!")
             await message.reply("... and according to my records, " + ("someone" if data["status"] else "no one") + " is in the shop right now.")
 
         else:
@@ -142,18 +162,7 @@ async def on_message(message):
                 "state": "open"
             })
         elif op == 0:
-            ts = datetime.now()
-
-            try:
-                last = data["weeks"][get_current_week_str()]["log"][-1]
-            except IndexError:
-                last = 0
-            if last["state"] == "open":
-                delta = ts - datetime.fromisoformat(last["time"])
-                # await message.channel.send("last " + str(delta.total_seconds()) + " seconds")
-                data["weeks"][get_current_week_str()]["total_hours"] += delta.total_seconds() / 3600
-                # await message.channel.send(str(data["weeks"][get_current_week_str()]["total_hours"]) + "total hours")
-
+            data["weeks"][get_current_week_str()]["total_hours"] = get_current_total()
             data["weeks"][get_current_week_str()]["log"].append({
                 "user": message.author.id,
                 "time": ts.isoformat(),
