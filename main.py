@@ -99,8 +99,8 @@ async def on_message(message):
             await message.channel.send(convo())
         return
 
-    if client.user.mentioned_in(message) or "attendance duck" in message.content.lower() or "quack" in message.content.lower():
-        if "report" in message.content.lower():
+    if client.user.mentioned_in(message) or "duck" in message.content.lower() or "quack" in message.content.lower():
+        if "report" in message.content.lower() or "status" in message.content.lower():
             t = get_current_total()
             h = int(t)
             m = round((t*60) % 60)
