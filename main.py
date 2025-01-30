@@ -103,8 +103,8 @@ async def on_message(message):
         if "report" in message.content.lower():
             t = get_current_total()
             h = int(t)
-            m = (t*60) % 60
-            s = (t*3600) % 60
+            m = round((t*60) % 60)
+            s = round((t*3600) % 60)
 
             await message.reply(f"Currently, Dana 3 has been used for {h} hours, {m} minutes, and {s} seconds this week!")
             await message.reply("... and according to my records, " + ("someone" if data["status"] else "no one") + " is in the shop right now.")
