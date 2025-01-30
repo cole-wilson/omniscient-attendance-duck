@@ -23,7 +23,7 @@ def save():
     if not os.path.isdir("data"):
         os.mkdir("data")
     with open("data/data.json", "w") as datafile:
-        json.dump(data, datafile)
+        json.dump(data, datafile, indent=2)
 
 def convo():
    return random.choice([
@@ -92,8 +92,8 @@ async def on_message(message):
             if "dump" in message.content:
                 save()
                 file = discord.File("data/data.json", filename="data.json")
-                embed = discord.Embed()
-                await message.channel.send(embed=embed, file=file)
+                # embed = discord.Embed()
+                await message.channel.send(file=file)
 
         else:
             await message.channel.send(convo())
