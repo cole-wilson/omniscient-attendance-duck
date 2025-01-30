@@ -20,7 +20,9 @@ def get_current_week_str():
     return then.strftime('%B.%d.%Y').lower()
 
 def save():
-    with open("data.json", "w") as datafile:
+    if not os.path.isdir("data"):
+        os.mkdir("data")
+    with open("data/data.json", "w") as datafile:
         json.dump(data, datafile)
 
 def convo():
@@ -36,14 +38,14 @@ def convo():
             ])
 
 try:
-    with open("data.json", "r") as datafile:
+    with open("data/data.json", "r") as datafile:
         data = json.load(datafile)
 except FileNotFoundError:
     pass
 
 
 async def update_status():
-    if data["status"]:
+    if data["status"] and len(data["weeks"][get_current_week_str()].keys() > 0):
         game = discord.CustomActivity("Dana 3 is OPEN [" + str(round(data["weeks"][get_current_week_str()]["total_hours"],1)) + " hours this week]")
         await client.change_presence(status=discord.Status.online, activity=game)
     else:
