@@ -52,7 +52,7 @@ async def update_status():
         await client.change_presence(status=discord.Status.online, activity=game)
     else:
         game = discord.CustomActivity("Dana 3 is EMPTY [" + str(round(data["weeks"][get_current_week_str()]["total_hours"],1)) + " hours this week]")
-        await client.change_presence(status=discord.Status.dnd, activity=game)
+        await client.change_presence(status=discord.Status.do_not_disturb, activity=game)
 
 @client.event
 async def on_ready():
