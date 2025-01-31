@@ -164,7 +164,7 @@ async def on_message(message):
     if op >= 0:
         if str(message.author.id) not in data["users"].keys():
             dm = await message.author.create_dm()
-            await dm.send(str(message.author.id) + "   " + str(list(data["users"].keys())))
+            # await dm.send(str(message.author.id) + "   " + str(list(data["users"].keys())))
             await dm.send("Hey there, I'm the Omniscient Attendance Duck that logs hours spent in Dana 3!")
             await dm.send("I don't know you yet, so please reply to this message with your name and WSU ID number so I know who you are.")
 
